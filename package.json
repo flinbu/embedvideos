@@ -1,0 +1,11 @@
+{
+  "name": "embedvideos",
+  "version": "1.0.0",
+  "description": "Plugin to embed video from youtube, vimeo and kaltura, async embed after user action \"click\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "author": "Felipe Linares @flinbu",
+  "license": "ISC"
+}

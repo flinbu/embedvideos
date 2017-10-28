@@ -100,7 +100,7 @@ window.kalturaLoaded = false;
       playButton.click(function() {
         var tag = 'iframe',
             insideContent = '';
-        if (AMP) {
+        if (typeof AMP !== 'undefined') {
           tag = 'amp-iframe';
           insideContent = '<amp-img layout="fill" src="' + settings.thumbnail + '" placeholder></amp-img>';
         }

@@ -117,10 +117,10 @@ window.kalturaLoaded = false;
               }
             });
           } else if (settings.video_src == 'youtube') {
-            var video_player = '<' + tag + ' width="1280" height="720" sandbox="allow-scripts allow-presentation allow-same-origin" layout="responsive" src="https://www.youtube.com/embed/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" frameborder = "0" allowfullscreen autoplay >' + insideContent + '< /' + tag + '>';
+            var video_player = '<' + tag + ' width="' + settings.width + '" height="' + settings.height + '" sandbox="allow-scripts allow-presentation allow-same-origin" layout="responsive" src="https://www.youtube.com/embed/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" frameborder = "0" allowfullscreen autoplay >' + insideContent + '< /' + tag + '>';
             video_cont.append(video_player);
           } else if (settings.video_src == 'vimeo') {
-            var video_player = '<' + tag + ' src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" width="1280" height="1080" sandbox="allow-scripts allow-presentation allow-same-origin" layout="responsive" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>' + insideContent + '</' + tag + '>';
+            var video_player = '<' + tag + ' src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" width="' + settings.width + '" height="' + settings.height + '" sandbox="allow-scripts allow-presentation allow-same-origin" layout="responsive" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>' + insideContent + '</' + tag + '>';
             video_cont.append(video_player);
           }
         });

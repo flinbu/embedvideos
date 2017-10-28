@@ -39,8 +39,8 @@ window.kalturaLoaded = false;
       }
       var video_styles = function() {
         video_cont.css({
-          width : settings.width,
-          height : settings.height,
+          width : '100%',
+          height : '100%',
           position : 'absolute',
           top : 0,
           left : 0,

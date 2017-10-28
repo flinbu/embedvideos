@@ -115,10 +115,10 @@ window.kalturaLoaded = false;
               }
             });
           } else if (settings.video_src == 'youtube') {
-            var video_player = '<' + tag + ' width="100%" height="100%" sandbox="allow-scripts allow-same-origin" layout="responsive" src="https://www.youtube.com/embed/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" frameborder = "0" allowfullscreen autoplay > < /' + tag + '>';
+            var video_player = '<' + tag + ' sandbox="allow-scripts allow-same-origin" layout="responsive" src="https://www.youtube.com/embed/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" frameborder = "0" allowfullscreen autoplay > < /' + tag + '>';
             video_cont.append(video_player);
           } else if (settings.video_src == 'vimeo') {
-            var video_player = '<' + tag + ' src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" width="100%" height="100%" sandbox="allow-scripts allow-same-origin" layout="responsive" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></' + tag + '>';
+            var video_player = '<' + tag + ' src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" sandbox="allow-scripts allow-same-origin" layout="responsive" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></' + tag + '>';
             video_cont.append(video_player);
           }
         });

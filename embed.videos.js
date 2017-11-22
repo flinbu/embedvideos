@@ -1,5 +1,7 @@
-window.kalturaLoaded = false;
-(function($) {
+(function ($) {
+  window.kalturaLoaded = false;
+  window.youtubeLoaded = false;
+  window.youtubePlayers = [];
   $.fn.embedVideo = function(options) {
     $(this).each(function() {
       var settings = $.extend({
@@ -30,6 +32,12 @@ window.kalturaLoaded = false;
           window.kalturaLoaded = true;
         }
       } else if (settings.video_src == 'youtube') {
+        if (!window.youtubeLoaded) {
+          var tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          document.getElementsByTagName('head')[0].appendChild(tag);
+          window.youtubeLoaded = true;
+        }
         var videoid = settings.video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
         if(videoid != null) {
           settings.video_id = videoid[1];
@@ -37,6 +45,13 @@ window.kalturaLoaded = false;
       } else if (settings.video_src == 'vimeo') {
         settings.video_id = settings.video_url.split(/video\/|https?:\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
       }
+
+      // Get uniqid
+      var n = Math.floor(Math.random() * 11);
+      var k = Math.floor(Math.random() * 1000000);
+      var m = String.fromCharCode(n) + k;
+      m = settings.video_src + '_video_' + m;
+
       var video_styles = function() {
         video_cont.css({
           width : settings.width,
@@ -48,7 +63,7 @@ window.kalturaLoaded = false;
           'background-size' : 'cover',
           'background-position' : '50% 50%',
           'background-image': 'url("' + settings.thumbnail + '")'
-        });
+        }).attr('id', m);
       }
 
       if (!settings.thumbnail) {
@@ -95,24 +110,34 @@ window.kalturaLoaded = false;
 
       //videoContainer.appendTo(parent);
 
-      var videoAutoPlay = (settings.autoplay == 'true') ? 1 : 1;
+      var videoAutoPlay = (settings.autoplay) ? settings.autoplay : true;
 
       playButton.click(function() {
         playButton.fadeOut(function() {
           $(this).remove();
           if (settings.video_src == 'kaltura' && window.kalturaLoaded) {
             kWidget.embed({
-              'targetId' : settings.container,
+              'targetId' : m,
               'wid' : '_' + settings.wid,
               'uiconf_id' : settings.uiconf,
               'entry_id' : settings.video_id,
               'flashvars' : {
-                'autoPlay' : true
+                'autoPlay' : videoAutoPlay
               }
             });
           } else if (settings.video_src == 'youtube') {
-            var video_player = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" frameborder="0" allowfullscreen autoplay></iframe>';
-            video_cont.append(video_player);
+            window.youtubePlayers[m] = new YT.Player(m, {
+              width: '100%',
+              height: '100%',
+              videoId: settings.video_id,
+              events: {
+                'onReady': function(event) {
+                  if (videoAutoPlay) {
+                    event.target.playVideo();
+                  }
+                }
+              }
+            });
           } else if (settings.video_src == 'vimeo') {
             var video_player = '<iframe src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
             video_cont.append(video_player);

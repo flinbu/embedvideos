@@ -1,6 +1,6 @@
 {
   "name": "embedvideos",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Plugin to embed video from youtube, vimeo and kaltura, async embed after user action \"click\"",
   "main": "index.js",
   "scripts": {

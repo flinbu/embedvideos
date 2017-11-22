@@ -54,8 +54,8 @@
 
       var video_styles = function() {
         video_cont.css({
-          width : settings.width,
-          height : settings.height,
+          width : '100%',
+          height : '100%',
           position : 'absolute',
           top : 0,
           left : 0,
@@ -113,6 +113,12 @@
       var videoAutoPlay = (settings.autoplay) ? settings.autoplay : true;
 
       playButton.click(function() {
+        var tag = 'iframe',
+            insideContent = '';
+        if (typeof AMP !== 'undefined') {
+          tag = 'amp-iframe';
+          insideContent = '<amp-img layout="fill" src="' + settings.thumbnail + '" placeholder></amp-img>';
+        }
         playButton.fadeOut(function() {
           $(this).remove();
           if (settings.video_src == 'kaltura' && window.kalturaLoaded) {
@@ -139,7 +145,7 @@
               }
             });
           } else if (settings.video_src == 'vimeo') {
-            var video_player = '<iframe src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+            var video_player = '<' + tag + ' src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" width="' + settings.width + '" height="' + settings.height + '" sandbox="allow-scripts allow-presentation allow-same-origin" layout="responsive" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>' + insideContent + '</' + tag + '>';
             video_cont.append(video_player);
           }
         });

@@ -17,7 +17,10 @@
             height : ($(this).data('height')) ? $(this).data('height') : '100%',
             container : $(this).attr('id'),
             video_src: ($(this).data('source')) ? $(this).data('source') : 'kaltura',
-            play : '<svg enable-background="new 0 0 34 34" height="34px" id="Layer_1" version="1.1" viewBox="0 0 34 34" width="34px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M17.078,0.25c-9.389,0-17,7.611-17,17s7.611,17,17,17s17-7.611,17-17S26.467,0.25,17.078,0.25z M14,23.963  V10.537l9,6.713L14,23.963z" fill="#FFF"/></svg>'
+            play : '<svg enable-background="new 0 0 34 34" height="34px" id="Layer_1" version="1.1" viewBox="0 0 34 34" width="34px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M17.078,0.25c-9.389,0-17,7.611-17,17s7.611,17,17,17s17-7.611,17-17S26.467,0.25,17.078,0.25z M14,23.963  V10.537l9,6.713L14,23.963z" fill="#FFF"/></svg>',
+            playWidth: '100px',
+            playHeight: '100px',
+            playOpacity: '0.7'
           }, options);
 
       var video_cont = $(this);
@@ -97,8 +100,20 @@
         height : '100%'
       });
 
-      var playButton = $('<a>').attr({
-        'style' : 'position: absolute; cursor: pointer; width: 100px; height: 102px; top: 50%; margin-top: -50px; left: 50%; margin-left: -50px; text-decoration: none; border: none; border-radius: 50%; box-shadow: 0 0 100px rgba(0, 0, 0, 0.7); opacity: 0.7;'
+      var playButton = $('<a>').css({
+        'position': 'absolute',
+        'cursor': 'pointer',
+        'width': settings.playWidth,
+        'height': settings.playHeight,
+        'top': '50%',
+        'margin-top': '-' + settings.playHeight + 'px',
+        'left': '50%',
+        'margin-left': '-' + settings.playWidth + 'px',
+        'text-decoration': 'none',
+        'border': 'none',
+        'border-radius': '50%',
+        'box-shadow': '0 0 100px rgba(0, 0, 0, 0.7)',
+        'opacity': settings.playOpacity
       }).append(playIcon);
       var parent = $(this).parent();
 

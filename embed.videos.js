@@ -7,6 +7,7 @@
       var settings = $.extend({
             uiconf : '11601208',
             wid : '102',
+            kalturaServerURL: 'http://cloudvideo.cdn.net.co',
             maxWidth : ($(this).data('max-width')) ? $(this).data('max-width') : '1200px',
             video_id : $(this).data('video-id'),
             video_url : ($(this).data('video-url')) ? $(this).data('video-url') : null,
@@ -29,7 +30,7 @@
         if (!window.kalturaLoaded) {
           var script = document.createElement('script');
           script.type = 'text/javascript';
-          script.src = 'http://cloudvideo.cdn.net.co/p/' + settings.wid + '/sp/' + settings.wid + '00/embedIframeJs/uiconf_id/' + settings.uiconf + '/partner_id/' + settings.wid;
+          script.src = settings.kalturaServerURL + '/p/' + settings.wid + '/sp/' + settings.wid + '00/embedIframeJs/uiconf_id/' + settings.uiconf + '/partner_id/' + settings.wid;
           document.getElementsByTagName('head')[0].appendChild(script);
 
           window.kalturaLoaded = true;

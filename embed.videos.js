@@ -18,6 +18,8 @@
             height : ($(this).data('height')) ? $(this).data('height') : '100%',
             container : $(this).attr('id'),
             video_src: ($(this).data('source')) ? $(this).data('source') : 'kaltura',
+            extra_params: ($(this).data('params')) ? $(this).data('params') : false,
+            cc_policy: ($(this).data('cc-policy')) ? $(this).data('cc-policy') : false,
             play : '<svg enable-background="new 0 0 34 34" height="34px" id="Layer_1" version="1.1" viewBox="0 0 34 34" width="34px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M17.078,0.25c-9.389,0-17,7.611-17,17s7.611,17,17,17s17-7.611,17-17S26.467,0.25,17.078,0.25z M14,23.963  V10.537l9,6.713L14,23.963z" fill="#FFF"/></svg>',
             playWidth: '100px',
             playHeight: '100px',
@@ -148,20 +150,34 @@
               }
             });
           } else if (settings.video_src == 'youtube') {
-            window.youtubePlayers[m] = new YT.Player(m, {
-              width: '100%',
-              height: '100%',
-              videoId: settings.video_id,
-              events: {
-                'onReady': function(event) {
-                  if (videoAutoPlay) {
-                    event.target.playVideo();
+            var YTConfig = {
+                width: '100%',
+                height: '100%',
+                videoId: settings.video_id,
+                events: {
+                  'onReady': function (event) {
+                    if (videoAutoPlay) {
+                      event.target.playVideo();
+                    }
                   }
                 }
+              };
+            if (settings.autoplay || settings.cc_policy) {
+              YTConfig.playerVars = {};
+              if (settings.cc_policy) {
+                YTConfig.playerVars.cc_load_policy = settings.cc_policy;
               }
-            });
+              if (settings.autoplay) {
+                YTConfig.playerVars.autoplay = settings.autoplay;
+              }
+            }
+            window.youtubePlayers[m] = new YT.Player(m, YTConfig);
           } else if (settings.video_src == 'vimeo') {
-            var video_player = '<' + tag + ' src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + '" width="' + settings.width + '" height="' + settings.height + '" sandbox="allow-scripts allow-presentation allow-same-origin" layout="responsive" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>' + insideContent + '</' + tag + '>';
+            var videoParams = '';
+            if (settings.extra_params) {
+              videoParams = '&' + settings.extra_params;
+            }
+            var video_player = '<' + tag + ' src="https://player.vimeo.com/video/' + settings.video_id + '?autoplay=' + videoAutoPlay + videoParams + '" width="' + settings.width + '" height="' + settings.height + '" sandbox="allow-scripts allow-presentation allow-same-origin" layout="responsive" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>' + insideContent + '</' + tag + '>';
             video_cont.append(video_player);
           }
         });
